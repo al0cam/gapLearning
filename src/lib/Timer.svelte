@@ -1,8 +1,6 @@
 <script lang="ts">
   import { timerStore } from "../Stores/TimerStore";
 
-  timerStore;
-
   $: displayTime = $timerStore.getFormattedTime();
   let start = false;
   function startStopTimer() {
@@ -11,9 +9,10 @@
   }
 </script>
 
-<div>
-  <h1 class="text-9xl">{displayTime}</h1>
-  <button class="btn btn-primary w-full" on:click={() => startStopTimer()}
-    >{start ? "Stop" : "Start"}</button
+<div class="flex flex-col items-center">
+  <h1 class="text-9xl text-gray-400">{displayTime}</h1>
+  <button
+    class="btn btn-primary text-lg w-3/5"
+    on:click={() => startStopTimer()}>{start ? "Stop" : "Start"}</button
   >
 </div>
