@@ -1,9 +1,16 @@
 <script lang="ts">
   import { settingsStore } from "../Stores/SettingsStore";
   import { timerStore } from "../Stores/TimerStore";
+  import { languageStore } from "../Stores/LanguageStore";
   import CancelIcon from "../assets/CancelIcon.svg";
 
   let modal: HTMLDialogElement;
+  let selectedLanguage: string = languageStore.getDefaultLanguage();
+
+  function selectLanguage() {
+    console.log("OK");
+    languageStore.setLanguage(selectedLanguage);
+  }
 
   $: if (modal instanceof HTMLDialogElement) modal.showModal();
 </script>
@@ -31,7 +38,7 @@ for some reason i feel like the settings should start from the top and go to the
       <!-- content of subtitle -->
       <div class="flex flex-row gap-2 join">
         <div class="flex flex-col items-center">
-          <span>Hours</span>
+          <span>{languageStore.translate("Hours")}</span>
           <input
             class="w-14 text-center rounded-md"
             type="number"
@@ -54,13 +61,32 @@ for some reason i feel like the settings should start from the top and go to the
             bind:value={$timerStore.seconds}
           />
         </div>
-      </div>
-      <!-- dialog footer -->
-      <div class="flex flex-row justify-end">
-        <button class="btn btn-primary" on:click={settingsStore.closeModal}>
-          Save
-        </button>
+        <!-- content of subtitle end -->
       </div>
     </div>
+
+    <div>
+      <!-- subtitle -->
+      <span class="text-xl">{languageStore.translate("Language")}</span>
+      <!-- content of subtitle -->
+      <div class="flex flex-row gap-2 join">
+        <select
+          class="select w-min max-w-xs"
+          bind:value={selectedLanguage}
+          on:change={() => selectLanguage()}
+        >
+          {#each languageStore.getLanguages() as language}
+            <option value={language}>{language}</option>
+          {/each}
+        </select>
+      </div>
+      <!-- content of subtitle end -->
+    </div>
+    <!-- dialog footer -->
+    <!-- <div class="flex flex-row justify-end">
+      <button class="btn btn-primary" on:click={settingsStore.closeModal}>
+        Save
+      </button>
+    </div> -->
   </div>
 </dialog>
