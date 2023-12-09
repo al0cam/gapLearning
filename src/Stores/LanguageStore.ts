@@ -4,6 +4,7 @@ type Translations = {
     [key: string]: string;
 };
 
+
 const DEFAULT_LANGUAGE = "English";
 const LIST_OF_LANGUAGES = ["English", "Croatian"];
 
@@ -11,22 +12,16 @@ function loadTranslations(language: string) {
     return import(`../Translations/${language}.json`);
 }    
 
+let translations: Translations = await loadTranslations(DEFAULT_LANGUAGE);
+
 function createStore() {
-
-    const { subscribe, set, update } = writable(DEFAULT_LANGUAGE);
-
-    let translations: Translations = {};
+    const { subscribe, set, update } = writable(translations);
 
     return {
         subscribe,
         setLanguage: async (language: string) => {
-            set(language);
             translations = await loadTranslations(language);
-            console.log(translations);
-            update(() => language);
-        },
-        translate: (key: string) => {
-            return translations[key] || key;
+            set(translations);
         },
         getLanguages: () => LIST_OF_LANGUAGES,
         getDefaultLanguage: () => DEFAULT_LANGUAGE,
