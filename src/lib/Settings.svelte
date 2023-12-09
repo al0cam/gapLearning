@@ -10,6 +10,8 @@
   function selectLanguage() {
     console.log("OK");
     languageStore.setLanguage(selectedLanguage);
+    console.log($languageStore["language"]);
+    console.log($languageStore);
   }
 
   $: if (modal instanceof HTMLDialogElement) modal.showModal();
@@ -23,22 +25,22 @@ for some reason i feel like the settings should start from the top and go to the
   bind:this={modal}
   class="rounded-lg mx-auto md:w-2/5 w-full flex flex-col gap-3 p-3"
 >
-  <!-- dialog header together with close button -->
+  <!-- HEADER START -->
   <div class="flex flex-row justify-between">
-    <span class="text-3xl font-bold">Settings</span>
+    <span class="text-3xl font-bold">{$languageStore["settings"]}</span>
     <button class="btn btn-secondary" on:click={settingsStore.closeModal}>
       <img src={CancelIcon} alt="Yes" class="w-full h-full p-2" />
     </button>
   </div>
-  <!-- dialog content -->
+  <!-- HEADER END -->
   <div class="flex flex-col gap-3">
+    <!-- CONTENT -->
     <div>
-      <!-- subtitle -->
-      <span class="text-xl">Time</span>
-      <!-- content of subtitle -->
-      <div class="flex flex-row gap-2 join">
+      <!-- TIMER -->
+      <span class="text-2xl pb-2">{$languageStore["time"]}</span>
+      <div class="flex flex-row gap-3">
         <div class="flex flex-col items-center">
-          <span>{languageStore.translate("Hours")}</span>
+          <span>{$languageStore["hours"]}</span>
           <input
             class="w-14 text-center rounded-md"
             type="number"
@@ -46,7 +48,7 @@ for some reason i feel like the settings should start from the top and go to the
           />
         </div>
         <div class="flex flex-col items-center">
-          <span>Minutes</span>
+          <span>{$languageStore["minutes"]}</span>
           <input
             class="w-14 text-center rounded-md"
             type="number"
@@ -54,39 +56,38 @@ for some reason i feel like the settings should start from the top and go to the
           />
         </div>
         <div class="flex flex-col items-center">
-          <span>Seconds</span>
+          <span>{$languageStore["seconds"]}</span>
           <input
             class="w-14 text-center rounded-md"
             type="number"
             bind:value={$timerStore.seconds}
           />
         </div>
-        <!-- content of subtitle end -->
       </div>
+      <!-- TIMER END -->
     </div>
 
-    <div>
-      <!-- subtitle -->
-      <span class="text-xl">{languageStore.translate("Language")}</span>
-      <!-- content of subtitle -->
-      <div class="flex flex-row gap-2 join">
-        <select
-          class="select w-min max-w-xs"
-          bind:value={selectedLanguage}
-          on:change={() => selectLanguage()}
-        >
-          {#each languageStore.getLanguages() as language}
-            <option value={language}>{language}</option>
-          {/each}
-        </select>
-      </div>
-      <!-- content of subtitle end -->
+    <div class="flex flex-col gap-1">
+      <!-- LANGUAGE -->
+      <span class="text-2xl">{$languageStore["language"]}</span>
+      <select
+        class="select w-min max-w-xs"
+        bind:value={selectedLanguage}
+        on:change={() => selectLanguage()}
+      >
+        {#each languageStore.getLanguages() as language}
+          <option value={language}>{language}</option>
+        {/each}
+      </select>
+      <!-- LANGUAGE END -->
     </div>
-    <!-- dialog footer -->
-    <!-- <div class="flex flex-row justify-end">
-      <button class="btn btn-primary" on:click={settingsStore.closeModal}>
-        Save
-      </button>
-    </div> -->
+    <!-- CONTENT END -->
   </div>
+  <!-- FOOTER -->
+  <!-- <div class="flex flex-row justify-end">
+    <button class="btn btn-primary" on:click={settingsStore.closeModal}>
+      Save
+    </button>
+  </div> -->
+  <!-- FOOTER END -->
 </dialog>
