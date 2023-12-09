@@ -2,6 +2,7 @@
     "title": "Gap Learning",
     "description": "Gap Learning is a learning management system that allows teachers to create courses and students to enroll in them.",
     "settings": "Postavke",
+    "time": "Vrijeme",
     "hours": "Sati",
     "minutes": "Minute",
     "seconds": "Sekunde",
