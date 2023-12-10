@@ -1,4 +1,5 @@
 export class Timer{
+    // TODO: add short and long break time 
     hours: number;
     minutes: number;
     seconds: number;

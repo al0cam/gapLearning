@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { derived, writable } from "svelte/store";
 import { Timer } from "../Models/Timer";
 
 function createStore (){
@@ -6,6 +6,13 @@ function createStore (){
 
     // need method tick that will decrement the timer by 1 second
     let interval: number | null = null;
+    // TODO: add short and long break time
+    // TODO: Add set times to cookies so the user doesnt have to add them 10 times over and over
+
+    const tickingHours = derived(
+        timerStore,
+        $timerStore => $timerStore.hours,
+    );
 
     return {
         subscribe,

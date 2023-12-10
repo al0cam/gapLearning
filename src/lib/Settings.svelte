@@ -20,6 +20,8 @@
 <!-- TODO: i dont like the fact that the modal is in the center of the page at the moment
 for some reason i feel like the settings should start from the top and go to the end -->
 
+<!-- TOOD: find a way to set the time in a reactive fashion -->
+
 <!-- dialog base (background) -->
 <dialog bind:this={modal} class="rounded-lg mx-auto md:w-2/5 w-full p-3">
   <div class="flex flex-col gap-3">
@@ -60,20 +62,6 @@ for some reason i feel like the settings should start from the top and go to the
               type="number"
               bind:value={$timerStore.seconds}
             />
-          </div>
-          <div>
-            <button
-              class="btn btn-secondary w-12 h-12 p-2"
-              on:click={settingsStore.closeModal}
-            >
-              <img src={ResetIcon} alt="Yes" class="w-full h-full" />
-            </button>
-            <button
-              class="btn btn-secondary w-12 h-12 p-2"
-              on:click={settingsStore.closeModal}
-            >
-              <img src={SaveIcon} alt="Yes" class="w-full h-full" />
-            </button>
           </div>
         </div>
         <!-- TIMER END -->
