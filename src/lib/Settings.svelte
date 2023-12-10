@@ -3,6 +3,8 @@
   import { timerStore } from "../Stores/TimerStore";
   import { languageStore } from "../Stores/LanguageStore";
   import CancelIcon from "../assets/CancelIcon.svg";
+  import SaveIcon from "../assets/SaveIcon.svg";
+  import ResetIcon from "../assets/ResetIcon.svg";
 
   let selectedLanguage: string = languageStore.getDefaultLanguage();
 
@@ -11,18 +13,15 @@
   }
 
   // HACK FOR PERMA DISPLAYING THE MODAL WHILE WORKING ON IT
-  // let modal: HTMLDialogElement;
-  // $: if (modal instanceof HTMLDialogElement) modal.showModal();
+  let modal: HTMLDialogElement;
+  $: if (modal instanceof HTMLDialogElement) modal.showModal();
 </script>
 
 <!-- TODO: i dont like the fact that the modal is in the center of the page at the moment
 for some reason i feel like the settings should start from the top and go to the end -->
 
 <!-- dialog base (background) -->
-<dialog
-  bind:this={$settingsStore.modal}
-  class="rounded-lg mx-auto md:w-2/5 w-full p-3"
->
+<dialog bind:this={modal} class="rounded-lg mx-auto md:w-2/5 w-full p-3">
   <div class="flex flex-col gap-3">
     <!-- HEADER START -->
     <div class="flex flex-row justify-between">
@@ -61,6 +60,20 @@ for some reason i feel like the settings should start from the top and go to the
               type="number"
               bind:value={$timerStore.seconds}
             />
+          </div>
+          <div>
+            <button
+              class="btn btn-secondary w-12 h-12 p-2"
+              on:click={settingsStore.closeModal}
+            >
+              <img src={ResetIcon} alt="Yes" class="w-full h-full" />
+            </button>
+            <button
+              class="btn btn-secondary w-12 h-12 p-2"
+              on:click={settingsStore.closeModal}
+            >
+              <img src={SaveIcon} alt="Yes" class="w-full h-full" />
+            </button>
           </div>
         </div>
         <!-- TIMER END -->
