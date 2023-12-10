@@ -2,29 +2,35 @@ export class Timer{
     hours: number;
     minutes: number;
     seconds: number;
+    tickingHours: number;
+    tickingMinutes: number;
+    tickingSeconds: number;
 
     constructor(hours: number, minutes: number, seconds: number){
-        this.hours = hours || 0;
-        this.minutes = minutes || 20;
-        this.seconds = seconds || 0;
+        this.hours = hours;
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.tickingHours = hours;
+        this.tickingMinutes = minutes;
+        this.tickingSeconds = seconds;
     }
 
     getFormattedTime(){
-        let hours = this.hours.toString();
-        let minutes = this.minutes.toString();
-        let seconds = this.seconds.toString();
+        let tickingHours = this.tickingHours.toString();
+        let tickingMinutes = this.tickingMinutes.toString();
+        let tickingSeconds = this.tickingSeconds.toString();
 
-        if(hours.length < 2)
-            hours = "0" + hours;
-        if(minutes.length < 2)
-            minutes = "0" + minutes;
-        if(seconds.length < 2)
-            seconds = "0" + seconds;
+        if(tickingHours.length < 2)
+            tickingHours = "0" + tickingHours;
+        if(tickingMinutes.length < 2)
+            tickingMinutes = "0" + tickingMinutes;
+        if(tickingSeconds.length < 2)
+            tickingSeconds = "0" + tickingSeconds;
 
-        if(this.hours > 0)
-            return `${hours}:${minutes}:${seconds}`;
+        if(this.tickingHours > 0)
+            return `${tickingHours}:${tickingMinutes}:${tickingSeconds}`;
         else
-            return `${minutes}:${seconds}`;
+            return `${tickingMinutes}:${tickingSeconds}`;
     }
 
     setHours(hours: number){
@@ -42,53 +48,69 @@ export class Timer{
         return this;
     }
 
+    setTickingHours(tickingHours: number){
+        this.tickingHours = tickingHours;
+        return this;
+    }
+    
+    setTickingMinutes(tickingMinutes: number){
+        this.tickingMinutes = tickingMinutes;
+        return this;
+    }
+    
+    setTickingSeconds(tickingSeconds: number){
+        this.tickingSeconds = tickingSeconds;
+        return this;
+    }
+    
+    // Methods for ticking time
     addHour(){
-        this.hours++;
+        this.tickingHours++;
         return this;
     }
 
     addMinute(){
-        if(this.minutes < 59)
-            this.minutes++;
+        if(this.tickingMinutes < 59)
+            this.tickingMinutes++;
         else{
             this.addHour();
-            this.minutes = 0;
+            this.tickingMinutes = 0;
         }
         return this;
     }
 
     addSecond(){
-        if(this.seconds < 59)
-            this.seconds++;
+        if(this.tickingSeconds < 59)
+            this.tickingSeconds++;
         else{
             this.addMinute();
-            this.seconds = 0;
+            this.tickingSeconds = 0;
         }
         return this;
     }
 
     subtractHour(){
-        if(this.hours > 0)
-            this.hours--;
+        if(this.tickingHours > 0)
+            this.tickingHours--;
         return this;
     }
 
     subtractMinute(){
-        if(this.minutes > 0)
-            this.minutes--;
+        if(this.tickingMinutes > 0)
+            this.tickingMinutes--;
         else{
             this.subtractHour();
-            this.minutes = 59;
+            this.tickingMinutes = 59;
         }
         return this;
     }
 
     subtractSecond(){
-        if(this.seconds > 0)
-            this.seconds--;
+        if(this.tickingSeconds > 0)
+            this.tickingSeconds--;
         else{
             this.subtractMinute();
-            this.seconds = 59;
+            this.tickingSeconds = 59;
         }
         return this;
     }
@@ -99,4 +121,10 @@ export class Timer{
         return this;
     }
 
+    reset(){
+        this.tickingHours = this.hours;
+        this.tickingMinutes = this.minutes;
+        this.tickingSeconds = this.seconds;
+        return this;
+    }
 }

@@ -11,7 +11,7 @@ function createStore (){
         subscribe,
         set,
         update,
-        reset: () => set(new Timer(0, 20, 0)),
+        reset: () => update(timer => timer.reset()),
         addHour: () => update(timer => timer.addHour()),
         addMinute: () => update(timer => timer.addMinute()),
         addSecond: () => update(timer => timer.addSecond()),
