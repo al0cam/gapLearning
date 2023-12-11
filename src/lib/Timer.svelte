@@ -1,6 +1,7 @@
 <script lang="ts">
   import { timerStore } from "../Stores/TimerStore";
 
+  // TODO: Fix the stop not being reset to start when the timer hits finish
   $: displayTime = $timerStore.getFormattedTime();
   let start = false;
   function startStopTimer() {
