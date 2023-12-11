@@ -13,8 +13,8 @@
   }
 
   // HACK FOR PERMA DISPLAYING THE MODAL WHILE WORKING ON IT
-  let modal: HTMLDialogElement;
-  $: if (modal instanceof HTMLDialogElement) modal.showModal();
+  // let modal: HTMLDialogElement;
+  // $: if (modal instanceof HTMLDialogElement) modal.showModal();
 </script>
 
 <!-- TODO: i dont like the fact that the modal is in the center of the page at the moment
@@ -23,7 +23,10 @@ for some reason i feel like the settings should start from the top and go to the
 <!-- TOOD: find a way to set the time in a reactive fashion -->
 
 <!-- dialog base (background) -->
-<dialog bind:this={modal} class="rounded-lg mx-auto md:w-2/5 w-full p-3">
+<dialog
+  bind:this={$settingsStore.modal}
+  class="rounded-lg mx-auto md:w-2/5 w-full p-3"
+>
   <div class="flex flex-col gap-3">
     <!-- HEADER START -->
     <div class="flex flex-row justify-between">
