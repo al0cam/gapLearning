@@ -3,43 +3,48 @@ export class Timer{
     hours: number;
     minutes: number;
     seconds: number;
-    tickingHours: number;
-    tickingMinutes: number;
-    tickingSeconds: number;
+    // TODO: find a way to set these values in a reactive way
+    defaultHours: number;
+    defaultMinutes: number;
+    defaultSeconds: number;
 
-    constructor(hours: number, minutes: number, seconds: number){
+    finished: boolean = false;
+
+    constructor(hours: number, minutes: number, seconds: number, defaultHours?: number, defaultMinutes?: number, defaultSeconds?: number){
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
-        this.tickingHours = hours;
-        this.tickingMinutes = minutes;
-        this.tickingSeconds = seconds;
+        this.defaultHours = defaultHours || hours;
+        this.defaultMinutes = defaultMinutes || minutes;
+        this.defaultSeconds = defaultSeconds || seconds;
     }
 
     getFormattedTime(){
-        let tickingHours = this.tickingHours.toString();
-        let tickingMinutes = this.tickingMinutes.toString();
-        let tickingSeconds = this.tickingSeconds.toString();
+        let hours = this.hours.toString();
+        let minutes = this.minutes.toString();
+        let seconds = this.seconds.toString();
 
-        if(tickingHours.length < 2)
-            tickingHours = "0" + tickingHours;
-        if(tickingMinutes.length < 2)
-            tickingMinutes = "0" + tickingMinutes;
-        if(tickingSeconds.length < 2)
-            tickingSeconds = "0" + tickingSeconds;
+        if(hours.length < 2)
+            hours = "0" + hours;
+        if(minutes.length < 2)
+            minutes = "0" + minutes;
+        if(seconds.length < 2)
+            seconds = "0" + seconds;
 
-        if(this.tickingHours > 0)
-            return `${tickingHours}:${tickingMinutes}:${tickingSeconds}`;
+        if(this.hours > 0)
+            return `${hours}:${minutes}:${seconds}`;
         else
-            return `${tickingMinutes}:${tickingSeconds}`;
+            return `${minutes}:${seconds}`;
     }
 
     setHours(hours: number){
+        this.hours = hours;
         this.hours = hours;
         return this;
     }
 
     setMinutes(minutes: number){
+        this.minutes = minutes;
         this.minutes = minutes;
         return this;
     }
@@ -48,71 +53,58 @@ export class Timer{
         this.seconds = seconds;
         return this;
     }
-
-    setTickingHours(tickingHours: number){
-        this.tickingHours = tickingHours;
-        return this;
-    }
-    
-    setTickingMinutes(tickingMinutes: number){
-        this.tickingMinutes = tickingMinutes;
-        return this;
-    }
-    
-    setTickingSeconds(tickingSeconds: number){
-        this.tickingSeconds = tickingSeconds;
-        return this;
-    }
     
     // Methods for ticking time
     addHour(){
-        this.tickingHours++;
+        this.hours++;
         return this;
     }
 
     addMinute(){
-        if(this.tickingMinutes < 59)
-            this.tickingMinutes++;
+        if(this.minutes < 59)
+            this.minutes++;
         else{
             this.addHour();
-            this.tickingMinutes = 0;
+            this.minutes = 0;
         }
         return this;
     }
 
     addSecond(){
-        if(this.tickingSeconds < 59)
-            this.tickingSeconds++;
+        if(this.seconds < 59)
+            this.seconds++;
         else{
             this.addMinute();
-            this.tickingSeconds = 0;
+            this.seconds = 0;
         }
         return this;
     }
 
     subtractHour(){
-        if(this.tickingHours > 0)
-            this.tickingHours--;
+        if(this.hours > 0)
+            this.hours--;
         return this;
     }
 
     subtractMinute(){
-        if(this.tickingMinutes > 0)
-            this.tickingMinutes--;
-        else{
+        if(this.minutes > 0)
+            this.minutes--;
+        else if(this.hours > 0){
             this.subtractHour();
-            this.tickingMinutes = 59;
+            this.minutes = 59;
         }
         return this;
     }
 
     subtractSecond(){
-        if(this.tickingSeconds > 0)
-            this.tickingSeconds--;
-        else{
+        if(this.seconds > 0)
+            this.seconds--;
+        else if(this.minutes > 0){
             this.subtractMinute();
-            this.tickingSeconds = 59;
+            this.seconds = 59;
         }
+        else 
+            this.finished = true;
         return this;
     }
 
@@ -122,10 +114,15 @@ export class Timer{
         return this;
     }
 
+    isFinished(){
+        return this.finished;
+    }
+
     reset(){
-        this.tickingHours = this.hours;
-        this.tickingMinutes = this.minutes;
-        this.tickingSeconds = this.seconds;
+        this.finished = false;
+        this.hours = this.defaultHours;
+        this.minutes = this.defaultMinutes;
+        this.seconds = this.defaultSeconds;
         return this;
     }
 }
