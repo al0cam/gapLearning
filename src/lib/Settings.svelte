@@ -3,14 +3,18 @@
   import { timerStore } from "../Stores/TimerStore";
   import { languageStore } from "../Stores/LanguageStore";
   import CancelIcon from "../assets/CancelIcon.svg";
-  import SaveIcon from "../assets/SaveIcon.svg";
-  import ResetIcon from "../assets/ResetIcon.svg";
 
   let selectedLanguage: string = languageStore.getDefaultLanguage();
 
   function selectLanguage() {
     languageStore.setLanguage(selectedLanguage);
   }
+
+  // TODO: remove this, it was just for testing
+  $: $timerStore.hours = $timerStore.defaultHours;
+  $: $timerStore.minutes = $timerStore.defaultMinutes;
+  $: $timerStore.seconds = $timerStore.defaultSeconds;
+  $: console.log($timerStore.seconds);
 
   // HACK FOR PERMA DISPLAYING THE MODAL WHILE WORKING ON IT
   // let modal: HTMLDialogElement;
@@ -47,7 +51,7 @@ for some reason i feel like the settings should start from the top and go to the
             <input
               class="w-14 text-center rounded-md"
               type="number"
-              bind:value={$timerStore.hours}
+              bind:value={$timerStore.defaultHours}
             />
           </div>
           <div class="flex flex-col items-center">
@@ -55,7 +59,7 @@ for some reason i feel like the settings should start from the top and go to the
             <input
               class="w-14 text-center rounded-md"
               type="number"
-              bind:value={$timerStore.minutes}
+              bind:value={$timerStore.defaultMinutes}
             />
           </div>
           <div class="flex flex-col items-center">
@@ -63,7 +67,7 @@ for some reason i feel like the settings should start from the top and go to the
             <input
               class="w-14 text-center rounded-md"
               type="number"
-              bind:value={$timerStore.seconds}
+              bind:value={$timerStore.defaultSeconds}
             />
           </div>
         </div>

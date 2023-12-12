@@ -1,10 +1,9 @@
-import { writable } from "svelte/store";
+import { derived, writable } from "svelte/store";
 import { Timer } from "../Models/Timer";
 
 function createStore (){
     const { subscribe, set, update } = writable(new Timer(0, 20, 0));
 
-    // need method tick that will decrement the timer by 1 second
     let interval: number | undefined;
 
     // TODO: add short and long break time
@@ -39,3 +38,6 @@ function createStore (){
 }
 
 export const timerStore = createStore();
+
+// TODO: Define new store with default values
+// seems like the easiest way to solve this
