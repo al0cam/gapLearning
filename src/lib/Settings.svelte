@@ -1,7 +1,7 @@
 <script lang="ts">
   import { settingsStore } from "../Stores/SettingsStore";
-  import { timerStore } from "../Stores/TimerStore";
   import { languageStore } from "../Stores/LanguageStore";
+  import { defaultValuesStore } from "../Stores/DefaultValuesStore";
   import CancelIcon from "../assets/CancelIcon.svg";
 
   let selectedLanguage: string = languageStore.getDefaultLanguage();
@@ -9,12 +9,6 @@
   function selectLanguage() {
     languageStore.setLanguage(selectedLanguage);
   }
-
-  // TODO: remove this, it was just for testing
-  $: $timerStore.hours = $timerStore.defaultHours;
-  $: $timerStore.minutes = $timerStore.defaultMinutes;
-  $: $timerStore.seconds = $timerStore.defaultSeconds;
-  $: console.log($timerStore.seconds);
 
   // HACK FOR PERMA DISPLAYING THE MODAL WHILE WORKING ON IT
   // let modal: HTMLDialogElement;
@@ -24,7 +18,7 @@
 <!-- TODO: i dont like the fact that the modal is in the center of the page at the moment
 for some reason i feel like the settings should start from the top and go to the end -->
 
-<!-- TOOD: find a way to set the time in a reactive fashion -->
+<!-- TODO: find a way to set the time in a reactive fashion -->
 
 <!-- dialog base (background) -->
 <dialog
@@ -51,7 +45,7 @@ for some reason i feel like the settings should start from the top and go to the
             <input
               class="w-14 text-center rounded-md"
               type="number"
-              bind:value={$timerStore.defaultHours}
+              bind:value={$defaultValuesStore.defaultHours}
             />
           </div>
           <div class="flex flex-col items-center">
@@ -59,7 +53,7 @@ for some reason i feel like the settings should start from the top and go to the
             <input
               class="w-14 text-center rounded-md"
               type="number"
-              bind:value={$timerStore.defaultMinutes}
+              bind:value={$defaultValuesStore.defaultMinutes}
             />
           </div>
           <div class="flex flex-col items-center">
@@ -67,7 +61,7 @@ for some reason i feel like the settings should start from the top and go to the
             <input
               class="w-14 text-center rounded-md"
               type="number"
-              bind:value={$timerStore.defaultSeconds}
+              bind:value={$defaultValuesStore.defaultSeconds}
             />
           </div>
         </div>

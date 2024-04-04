@@ -3,10 +3,6 @@ export class Timer{
     hours: number;
     minutes: number;
     seconds: number;
-    // TODO: find a way to set these values in a reactive way
-    defaultHours: number;
-    defaultMinutes: number;
-    defaultSeconds: number;
 
     finished: boolean = false;
 
@@ -14,9 +10,6 @@ export class Timer{
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
-        this.defaultHours = defaultHours || hours;
-        this.defaultMinutes = defaultMinutes || minutes;
-        this.defaultSeconds = defaultSeconds || seconds;
     }
 
     getFormattedTime(){
@@ -51,6 +44,11 @@ export class Timer{
 
     setSeconds(seconds: number){
         this.seconds = seconds;
+        return this;
+    }
+
+    setFinished(finished: boolean){
+        this.finished = finished;
         return this;
     }
     
@@ -116,13 +114,5 @@ export class Timer{
 
     isFinished(){
         return this.finished;
-    }
-
-    reset(){
-        this.finished = false;
-        this.hours = this.defaultHours;
-        this.minutes = this.defaultMinutes;
-        this.seconds = this.defaultSeconds;
-        return this;
     }
 }
